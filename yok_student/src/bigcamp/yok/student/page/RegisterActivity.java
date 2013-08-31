@@ -1,12 +1,15 @@
 package bigcamp.yok.student.page;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.telephony.TelephonyManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
+import android.widget.EditText;
 import android.widget.ImageView;
 import bigcamp.yok.student.R;
 import bigcamp.yok.student.model.Avatar;
@@ -28,13 +31,16 @@ public class RegisterActivity extends SherlockActivity {
 	int _avatar_index_head = 0;
 	int _avatar_index_torso = 0;
 	int _avatar_index_leg = 0;
-	int _avatar_max_head = 5;
-	int _avatar_max_torso = 5;
-	int _avatar_max_leg = 5;
+	int _avatar_max_head = 20;
+	int _avatar_max_torso = 20;
+	int _avatar_max_leg = 20;
 	Member _member;
 	private AutoCompleteTextView _groupAutoCompleteTextView;
+	private EditText _editTextPhone;
+	private EditText _editTextName;
 
 	public void onCreate(Bundle savedInstanceState) {
+		setTheme(R.style.Theme_Yok); //Used for theme switching in samples
 
 		ActionBar actionBar = getSupportActionBar();
 		actionBar.setTitle("가입하기");
@@ -49,10 +55,25 @@ public class RegisterActivity extends SherlockActivity {
 		_imageViewHead = (ImageView) findViewById(R.id.imageViewHead);
 		_imageViewTorso = (ImageView) findViewById(R.id.imageViewTorso);
 		_imageViewLeg = (ImageView) findViewById(R.id.imageViewLeg);
+		_editTextName = (EditText) findViewById(R.id.editTextName);
+		_editTextPhone = (EditText) findViewById(R.id.editTextPhone);
 
+		// 아바타 기본값 설정.
 		_imageViewHead.setImageResource(R.drawable.h_0);
 		_imageViewTorso.setImageResource(R.drawable.t_0);
 		_imageViewLeg.setImageResource(R.drawable.l_0);
+
+
+		// 핸드폰 번호 자동 기입.
+		try {
+			TelephonyManager tMgr = (TelephonyManager) this.getSystemService(Context.TELEPHONY_SERVICE);
+			String mPhoneNumber = tMgr.getLine1Number();
+			if (mPhoneNumber != null && mPhoneNumber.length() > 5) {
+				_editTextPhone.setText(mPhoneNumber);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
 		// 토픽뷰 설정
 		_groupAutoCompleteTextView = (AutoCompleteTextView) findViewById(R.id.autoCompleteTextViewGroup);
@@ -196,14 +217,14 @@ public class RegisterActivity extends SherlockActivity {
 				--_avatar_index_torso;
 				if (_avatar_index_torso < 0)
 					_avatar_index_torso = 0;
-				resourceId = this.getResources().getIdentifier("t_" + _avatar_index_head, "drawable", this.getPackageName());
+				resourceId = this.getResources().getIdentifier("t_" + _avatar_index_torso, "drawable", this.getPackageName());
 				_imageViewTorso.setImageResource(resourceId);
 				break;
 			case R.id.buttonLeftLeg:
 				--_avatar_index_leg;
 				if (_avatar_index_leg < 0)
 					_avatar_index_leg = 0;
-				resourceId = this.getResources().getIdentifier("l_" + _avatar_index_head, "drawable", this.getPackageName());
+				resourceId = this.getResources().getIdentifier("l_" + _avatar_index_leg, "drawable", this.getPackageName());
 				_imageViewLeg.setImageResource(resourceId);
 				break;
 			case R.id.buttonRightHead:
@@ -221,10 +242,10 @@ public class RegisterActivity extends SherlockActivity {
 				_imageViewTorso.setImageResource(resourceId);
 				break;
 			case R.id.buttonRightLeg:
-				++_avatar_index_torso;
+				++_avatar_index_leg;
 				if (_avatar_index_leg > _avatar_max_leg)
 					_avatar_index_leg = _avatar_max_leg;
-				resourceId = this.getResources().getIdentifier("t_" + _avatar_index_leg, "drawable", this.getPackageName());
+				resourceId = this.getResources().getIdentifier("l_" + _avatar_index_leg, "drawable", this.getPackageName());
 				_imageViewLeg.setImageResource(resourceId);
 				break;
 		}

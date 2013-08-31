@@ -9,21 +9,69 @@
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:text="미션: 블라블라"
-			android:id="@+id/textView"
+			android:id="@+id/textViewMission"
 			android:layout_alignParentTop="true"
 			android:layout_centerHorizontal="true"/>
 
 	<ImageButton
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:id="@+id/imageButton"
+			android:layout_width="80dp"
+			android:layout_height="80dp"
+			android:id="@+id/imageButtonSubmitYok"
 			android:layout_alignParentBottom="true"
-			android:layout_alignParentRight="true"/>
+			android:layout_alignParentRight="true"
+			android:src="@drawable/ic_launcher"
+			android:scaleType="fitCenter"
+			android:background="@android:color/transparent"
+			android:onClick="click"/>
 
 	<ImageButton
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:id="@+id/imageButton2"
+			android:id="@+id/imageButtonShowStatistics"
 			android:layout_alignParentBottom="true"
-			android:layout_alignParentLeft="true"/>
+			android:layout_alignParentLeft="true"
+			android:src="@drawable/button_arrow_left"
+			android:background="@android:color/transparent"/>
+
+	<LinearLayout
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:dividerPadding="10dp"
+			android:layout_alignParentTop="true"
+			android:layout_toLeftOf="@+id/imageButtonSubmitYok"
+			android:layout_marginTop="20dp">
+
+		<include
+				android:layout_width="50dp"
+				android:layout_height="100dp"
+				layout="@layout/include_avatar"
+				android:layout_marginLeft="11dp"
+				android:layout_marginTop="12dp"
+				android:id="@+id/avatar1"/>
+
+		<include
+				layout="@layout/include_avatar"
+				android:layout_width="50dp"
+				android:layout_height="100dp"
+				android:layout_marginLeft="11dp"
+				android:layout_marginTop="12dp"
+				android:id="@+id/avatar2"/>
+
+		<include
+				layout="@layout/include_avatar"
+				android:layout_width="50dp"
+				android:layout_height="100dp"
+				android:layout_marginLeft="11dp"
+				android:layout_marginTop="12dp"
+				android:id="@+id/avatar3"/>
+
+		<include
+				layout="@layout/include_avatar"
+				android:layout_width="50dp"
+				android:layout_height="100dp"
+				android:layout_marginLeft="11dp"
+				android:layout_marginTop="12dp"
+				android:id="@+id/avatar4"/>
+	</LinearLayout>
+
 </RelativeLayout>

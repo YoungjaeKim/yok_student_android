@@ -12,6 +12,7 @@ public class WelcomeActivity extends SherlockActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		setTheme(R.style.Theme_Yok); //Used for theme switching in samples
 
 		getSupportActionBar().setDisplayShowTitleEnabled(false);
 		getSupportActionBar().setLogo(R.drawable.ic_launcher);

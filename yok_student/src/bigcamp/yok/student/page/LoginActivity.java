@@ -28,6 +28,7 @@ public class LoginActivity extends SherlockActivity {
 	private CheckBox _checkBoxAutoLogin;
 
 	public void onCreate(Bundle savedInstanceState) {
+		setTheme(R.style.Theme_Yok); //Used for theme switching in samples
 
 		getSupportActionBar().setDisplayShowTitleEnabled(false);
 		getSupportActionBar().setLogo(R.drawable.ic_launcher);

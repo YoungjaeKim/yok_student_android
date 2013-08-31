@@ -23,6 +23,7 @@ public class YokSherlockActivity extends SherlockActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		setTheme(R.style.Theme_Yok); //Used for theme switching in samples
 
 		super.onCreate(savedInstanceState);
 		InitializeHttpClient();

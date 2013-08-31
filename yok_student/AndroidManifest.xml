@@ -60,6 +60,14 @@
 				<category android:name="bigcamp.yok.student"/>
 			</intent-filter>
 		</receiver>
+		<receiver android:name=".widget.YokWidgetProvider">
+			<intent-filter>
+				<action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+			</intent-filter>
+			<meta-data android:name="android.appwidget.provider"
+			           android:resource="@xml/widget"/>
+		</receiver>
+
 		<service android:name=".GCMIntentService"/>
 
 		<activity
@@ -90,5 +98,6 @@
 		<activity android:name=".YokSherlockActivity"/>
 		<activity android:name=".page.RegisterActivity"/>
 		<activity android:name=".page.YokSubmitActivity"/>
+		<activity android:name=".page.StatisticsActivity"/>
 	</application>
 </manifest>

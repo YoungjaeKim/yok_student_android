@@ -6,16 +6,23 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.Gravity;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 import bigcamp.yok.student.R;
 import bigcamp.yok.student.StaticValue;
 import bigcamp.yok.student.YokSherlockActivity;
 import bigcamp.yok.student.YokUrl;
+import bigcamp.yok.student.model.Avatar;
 import bigcamp.yok.student.model.Member;
 import com.google.android.gcm.GCMRegistrar;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import org.json.JSONObject;
+
+import java.util.Random;
 
 /**
  * 메인 액티비티.
@@ -24,10 +31,14 @@ import org.json.JSONObject;
 public class MainActivity extends YokSherlockActivity {
 	private static final int REQUESTCODE_LOGIN = 1001;
 	private static final int REQUEST_WELCOME = 1002;
+	private static final int REQUEST_SUBMIT_YOK = 1003;
+	private static final int REQUEST_SHOWSTATISTICS = 1004;
 	SharedPreferences _sharedPrefs;
 	private String _RegistationChannelId;
+	TextView _textViewMission;
 
 	public void onCreate(Bundle savedInstanceState) {
+
 		super.onCreate(savedInstanceState);
 
 		// http://stackoverflow.com/a/10598594/361100
@@ -38,8 +49,12 @@ public class MainActivity extends YokSherlockActivity {
 
 		setContentView(R.layout.activity_main);
 
+		_textViewMission = (TextView) findViewById(R.id.textViewMission);
+
+
 		if (_member.principal != null && _member.principal.length() > 0) {
 			// TODO: 첫 화면 로딩
+			load();
 		}
 		else {
 			RequestLogin(MainActivity.this);
@@ -61,6 +76,57 @@ public class MainActivity extends YokSherlockActivity {
 			editor.commit();
 			registerPushChannel();
 		}
+	}
+
+	private void load() {
+		RelativeLayout avatarLayout1 = (RelativeLayout) findViewById(R.id.avatar1);
+		RelativeLayout avatarLayout2 = (RelativeLayout) findViewById(R.id.avatar2);
+		RelativeLayout avatarLayout3 = (RelativeLayout) findViewById(R.id.avatar3);
+		RelativeLayout avatarLayout4 = (RelativeLayout) findViewById(R.id.avatar4);
+
+		setAvatar(avatarLayout1, get_random_avatar());
+		setAvatar(avatarLayout2, get_random_avatar());
+		setAvatar(avatarLayout3, get_random_avatar());
+		setAvatar(avatarLayout4, get_random_avatar());
+	}
+
+	private Avatar get_random_avatar(){
+		Avatar avatar = new Avatar();
+		avatar.head = String.valueOf(get_random_number(0, 20));
+		avatar.torso = String.valueOf(get_random_number(0, 20));
+		avatar.leg = String.valueOf(get_random_number(0, 20));
+		return avatar;
+	}
+
+	private int get_random_number(int start, int last) {
+		// http://stackoverflow.com/a/6029518/361100
+		Random r = new Random();
+		int random_number = r.nextInt(last + 1 - start) + start;
+		return random_number;
+	}
+
+	/**
+	 * 아바타 셋업.
+	 *
+	 * @param avatarLayout
+	 * @param avatar
+	 */
+	private void setAvatar(RelativeLayout avatarLayout, Avatar avatar) {
+		int resourceId;
+		// Head
+		ImageView imageViewHead = (ImageView) avatarLayout.findViewById(R.id.imageViewHead);
+		resourceId = this.getResources().getIdentifier("h_" + avatar.head, "drawable", this.getPackageName());
+		imageViewHead.setImageResource(resourceId);
+
+		// Torso
+		ImageView imageViewTorso = (ImageView) avatarLayout.findViewById(R.id.imageViewTorso);
+		resourceId = this.getResources().getIdentifier("t_" + avatar.torso, "drawable", this.getPackageName());
+		imageViewTorso.setImageResource(resourceId);
+
+		// Leg
+		ImageView imageViewLeg = (ImageView) avatarLayout.findViewById(R.id.imageViewLeg);
+		resourceId = this.getResources().getIdentifier("l_" + avatar.leg, "drawable", this.getPackageName());
+		imageViewLeg.setImageResource(resourceId);
 	}
 
 
@@ -132,10 +198,12 @@ public class MainActivity extends YokSherlockActivity {
 						if (_member == null)
 							_member = new Member();
 						_member.principal = data.getStringExtra("userId");
+
 						if (data.getBooleanExtra("showWelcome", true)) {
 							Intent intent = new Intent(MainActivity.this, WelcomeActivity.class);
 							startActivityForResult(intent, REQUEST_WELCOME);
 						}
+						load();
 					}
 				}
 				else {
@@ -148,5 +216,16 @@ public class MainActivity extends YokSherlockActivity {
 				break;
 		}
 		super.onActivityResult(requestCode, resultCode, data);
+	}
+
+	public void click(View view) {
+		switch (view.getId()) {
+			case R.id.imageButtonSubmitYok:
+				startActivityForResult(new Intent(MainActivity.this, YokSubmitActivity.class), REQUEST_SUBMIT_YOK);
+				break;
+			case R.id.imageButtonShowStatistics:
+				startActivityForResult(new Intent(MainActivity.this, StatisticsActivity.class), REQUEST_SHOWSTATISTICS);
+				break;
+		}
 	}
 }
