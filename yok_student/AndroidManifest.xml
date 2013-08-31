@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="bigcamp.yok.student"
+          android:versionCode="1"
+          android:versionName="1.0">
+
+	<uses-sdk
+			android:minSdkVersion="8"
+			android:targetSdkVersion="16"/>
+
+	<supports-screens
+			android:anyDensity="true"
+			android:largeScreens="true"
+			android:normalScreens="true"
+			android:smallScreens="true"/>
+
+	<uses-permission android:name="android.permission.INTERNET"/>
+	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+	<uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+	<uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+	<uses-permission android:name="android.permission.GET_TASKS"/>
+	<uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+	<uses-permission android:name="android.permission.RECORD_VIDEO"/>
+	<uses-permission android:name="android.permission.RECORD_AUDIO"/>
+	<uses-permission android:name="android.permission.VIBRATE"/>
+
+	<uses-feature
+			android:name="android.hardware.camera"
+			android:required="false"/>
+	<uses-permission android:name="android.permission.SET_DEBUG_APP"/>
+
+	<permission
+			android:name="bigcamp.yok.student.permission.C2D_MESSAGE"
+			android:protectionLevel="signature"/>
+
+	<uses-permission android:name="bigcamp.yok.student.permission.C2D_MESSAGE"/>
+
+	<uses-permission android:name="com.google.android.c2dm.permission.RECEIVE"/>
+	<uses-permission android:name="android.permission.GET_ACCOUNTS"/>
+	<uses-permission android:name="android.permission.WAKE_LOCK"/>
+	<uses-permission android:name="com.google.android.c2dm.permission.REGISTRATION"/>
+	<uses-permission android:name="com.google.android.c2dm.permission.SEND"/>
+	<uses-permission android:name="android.permission.CAMERA"/>
+
+	<uses-feature
+			android:name="android.hardware.camera.autofocus"
+			android:required="false"/>
+
+	<application
+			android:label="@string/app_name"
+			android:icon="@drawable/ic_launcher">
+		<receiver
+				android:name="com.google.android.gcm.GCMBroadcastReceiver"
+				android:permission="com.google.android.c2dm.permission.SEND">
+			<intent-filter>
+				<action android:name="com.google.android.c2dm.intent.RECEIVE"/>
+				<action android:name="com.google.android.c2dm.intent.REGISTRATION"/>
+
+				<category android:name="bigcamp.yok.student"/>
+			</intent-filter>
+		</receiver>
+		<service android:name=".GCMIntentService"/>
+
+		<activity
+				android:name=".page.SplashActivity"
+				android:theme="@android:style/Theme.NoTitleBar"
+				android:label="@string/app_name"
+				android:screenOrientation="portrait">
+			<intent-filter>
+				<action android:name="android.intent.action.MAIN"/>
+				<category android:name="android.intent.category.DEFAULT"/>
+				<category android:name="android.intent.category.LAUNCHER"/>
+			</intent-filter>
+		</activity>
+		<activity android:name=".page.LoginActivity"
+		          android:configChanges="keyboardHidden|orientation|screenSize"/>
+		<activity android:name=".page.WelcomeActivity"
+		          android:configChanges="keyboardHidden|orientation|screenSize"/>
+		<activity
+				android:name=".page.MainActivity"
+				android:theme="@android:style/Theme.NoTitleBar"
+				android:configChanges="keyboardHidden|orientation|screenSize"
+				android:label="Main">
+			<intent-filter>
+				<category android:name="android.intent.category.DEFAULT"/>
+
+			</intent-filter>
+		</activity>
+		<activity android:name=".YokSherlockActivity"/>
+		<activity android:name=".page.RegisterActivity"/>
+		<activity android:name=".page.YokSubmitActivity"/>
+	</application>
+</manifest>
