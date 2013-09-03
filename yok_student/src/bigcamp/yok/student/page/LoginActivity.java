@@ -1,15 +1,18 @@
 package bigcamp.yok.student.page;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.telephony.TelephonyManager;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import bigcamp.yok.student.R;
 import bigcamp.yok.student.YokUrl;
 import com.actionbarsherlock.app.SherlockActivity;
+import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import org.apache.http.auth.AuthenticationException;
@@ -39,20 +42,35 @@ public class LoginActivity extends SherlockActivity {
 		_editTextPassword = (EditText) findViewById(R.id.editPw);
 		_checkBoxAutoLogin = (CheckBox) findViewById(R.id.checkBoxRememberCredential);
 
+		_editTextUserId.setText("01056569999"); // 비번은 패스워드.
+
 		// 기존 로그인 정보 표시.
-		SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-		if (sharedPrefs.contains("userid"))
-			_editTextUserId.setText(sharedPrefs.getString("userId", ""));
+//		SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+//		if (sharedPrefs.contains("userid"))
+//			_editTextUserId.setText(sharedPrefs.getString("userId", ""));
+//
+//		else {
+//			// 핸드폰 번호 자동 기입.
+//			try {
+//				TelephonyManager tMgr = (TelephonyManager) this.getSystemService(Context.TELEPHONY_SERVICE);
+//				String mPhoneNumber = tMgr.getLine1Number();
+//				if (mPhoneNumber != null && mPhoneNumber.length() > 5) {
+//					_editTextUserId.setText(mPhoneNumber);
+//				}
+//			} catch (Exception e) {
+//				e.printStackTrace();
+//			}
+//		}
 
 
 	}
 
 	public void click(View v) {
-		switch (v.getId()){
+		switch (v.getId()) {
 			case R.id.btnLogin:
 				String id = _editTextUserId.getText().toString();
 				String password = _editTextPassword.getText().toString();
-				processLoginFake(id, password);
+				processLogin(id, password);
 				break;
 			case R.id.btnRegister:
 				Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
@@ -77,7 +95,7 @@ public class LoginActivity extends SherlockActivity {
 		return true;
 	}
 
-	private void processLoginFake(final String id, final String password){
+	private void processLoginFake(final String id, final String password) {
 		Intent intent = new Intent();
 		intent.putExtra("autoLogin", _checkBoxAutoLogin.isChecked());
 		intent.putExtra("userId", id);
@@ -103,27 +121,31 @@ public class LoginActivity extends SherlockActivity {
 		}
 
 		RequestParams params = new RequestParams();
-		params.put("application", YokUrl.ApplicationName);
-		params.put("principal", id);
-		params.put("rawPassword", password);
+		params.put("user[phonenumber]", id);
+		params.put("user[password]", password);
 
-		MainActivity.HttpClient.addHeader("_spring_security_remember_me", "true");
-		MainActivity.HttpClient.get(YokUrl.LOGIN.toString(), params, new JsonHttpResponseHandler() {
+//		MainActivity.HttpClient.addHeader("_spring_security_remember_me", "true");
+		MainActivity.HttpClient.post(YokUrl.LOGIN.toString(), params, new AsyncHttpResponseHandler() {
+
 			@Override
-			public void onSuccess(JSONObject jsonObject) {
+			public void onSuccess(String s) {
+				super.onSuccess(s);
+
 				try {
+					JSONObject jsonObject = new JSONObject(s);
 					if (jsonObject.getBoolean("success")) {
-						super.onSuccess(jsonObject);
 						// 로그인 정보 삽입.
 						MainActivity.HttpClient.setBasicAuth(id, password);
 						Intent intent = new Intent();
 						intent.putExtra("autoLogin", _checkBoxAutoLogin.isChecked());
 						intent.putExtra("userId", id);
 						intent.putExtra("password", password);
+						intent.putExtra("token", jsonObject.getString("token"));
 						intent.putExtra("showWelcome", true);
 						setResult(RESULT_OK, intent);
 						LoginActivity.this.finish();
-					} else {
+					}
+					else {
 						throw new AuthenticationException();
 					}
 				} catch (JSONException e) {
@@ -136,11 +158,6 @@ public class LoginActivity extends SherlockActivity {
 			@Override
 			public void onFailure(Throwable throwable, String s) {
 				super.onFailure(throwable, s);
-			}
-
-			@Override
-			public void onFailure(Throwable throwable, JSONObject jsonObject) {
-				super.onFailure(throwable, jsonObject);
 				MainActivity.ShowToast(LoginActivity.this, getString(R.string.errorConnection), true);
 			}
 		});
@@ -156,7 +173,7 @@ public class LoginActivity extends SherlockActivity {
 					// 회원가입 완료 후 바로 로그인.
 					String u = data.getExtras().getString("principal");
 					String p = data.getExtras().getString("password");
-					processLoginFake(u, p);
+					processLogin(u, p);
 				}
 				break;
 			}

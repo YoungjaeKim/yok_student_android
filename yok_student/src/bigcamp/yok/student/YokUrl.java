@@ -7,11 +7,11 @@ public enum YokUrl {
 	// http://stackoverflow.com/questions/3978654/java-string-enum 참고.
 
 	ROOT(""),
-	TOKEN("/token"), LOGIN("/login"), REGISTER("/register"); // 토큰스티커
+	TOKEN("/token"), LOGIN("/api/tokens"), REGISTER("/api/users"), GROUP("/groups.json?search="), LOGOUT("/api/tokens/"); // 토큰스티커
 
-	public static String BaseUrl = "something.cloudapp.net";
-	public static String BaseRestUrl = "something.cloudapp.net/rest";
-	public static String ApplicationName = "하지말아욕";
+	public static String BaseUrl = "yok-server.cloudapp.net:8080";
+	public static String BaseRestUrl = "yok-server.cloudapp.net:8080";
+	public static String ApplicationName = "늉";
 
 	/**
 	 * 생성자.

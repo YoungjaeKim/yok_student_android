@@ -1,25 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+		>
 
-	<TextView
-			android:layout_width="fill_parent"
+	<ImageView
+			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:text="누가 욕했수?"
-			android:id="@+id/textView"
-			android:layout_alignParentLeft="true"
-			android:layout_marginLeft="0dp"
-			android:layout_alignParentTop="true"
-			android:layout_marginTop="0dp"/>
+			android:id="@+id/imageView"
+			android:src="@drawable/bg_yoksubmit"
+			android:scaleType="centerCrop"/>
 
+	<LinearLayout
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginLeft="50dp"
+			android:layout_marginTop="50dp"
+			android:orientation="vertical">
+
+		<include
+				android:layout_width="50dp"
+				android:layout_height="100dp"
+				layout="@layout/include_avatar"
+				android:id="@+id/avatar1"
+				/>
+	</LinearLayout>
+
+
+	<LinearLayout
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginRight="50dp"
+			android:layout_marginTop="50dp"
+			android:orientation="vertical"
+			android:layout_alignParentRight="true">
+
+		<include
+				layout="@layout/include_avatar"
+				android:layout_width="50dp"
+				android:layout_height="100dp"
+				android:id="@+id/avatar2"
+				/>
+	</LinearLayout>
+
+
+	<LinearLayout
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:orientation="vertical"
+			android:layout_alignParentBottom="true"
+			android:layout_alignParentLeft="true"
+			android:layout_marginBottom="50dp"
+			android:layout_marginLeft="50dp">
+
+	<include
+			layout="@layout/include_avatar"
+			android:id="@+id/avatar3"
+			android:layout_width="50dp"
+			android:layout_height="100dp"/>
+	</LinearLayout>
+
+	<LinearLayout
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:orientation="vertical"
+			android:layout_alignParentBottom="true"
+			android:layout_alignParentRight="true"
+			android:layout_marginRight="50dp"
+			android:layout_marginBottom="50dp">
+
+	<include
+			layout="@layout/include_avatar"
+			android:layout_width="50dp"
+			android:layout_height="100dp"
+			android:id="@+id/avatar4"
+/>
+</LinearLayout>
+
+	<!-- 욕 submit 팝업 -->
 	<RelativeLayout
 			android:layout_width="200dp"
-			android:layout_height="100dp"
+			android:layout_height="150dp"
 			android:layout_centerInParent="true"
-			android:background="@color/blue_background_yok"
+			android:background="@android:color/white"
 			android:id="@+id/relativeLayoutYokSubmitPopup"
 			android:visibility="invisible">
 
@@ -32,7 +97,15 @@
 			<TextView
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
-					android:text="아무개가 욕했나요?"
+					android:text="재욱이 나쁜 말을 했나요?"
+					android:id="@+id/textView2"
+					android:gravity="center_horizontal"
+					android:layout_marginTop="10dp"/>
+
+			<TextView
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:text="어떻게 하면 좋을까요?"
 					android:id="@+id/textView2"
 					android:gravity="center_horizontal"
 					android:layout_marginTop="10dp"/>
@@ -40,9 +113,11 @@
 			<Button
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
-					android:text="욕했어요"
+					android:text="도와 줄 꺼에요!"
 					android:id="@+id/buttonSubmit"
-					android:layout_marginTop="10dp"/>
+					android:layout_marginTop="10dp"
+					android:textColor="@android:color/black"
+					android:onClick="click"/>
 
 		</LinearLayout>
 	</RelativeLayout>

@@ -17,7 +17,11 @@ import bigcamp.yok.student.YokSherlockActivity;
 import bigcamp.yok.student.YokUrl;
 import bigcamp.yok.student.model.Avatar;
 import bigcamp.yok.student.model.Member;
+import bigcamp.yok.student.model.Mission;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
 import com.google.android.gcm.GCMRegistrar;
+import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import org.json.JSONObject;
@@ -33,9 +37,14 @@ public class MainActivity extends YokSherlockActivity {
 	private static final int REQUEST_WELCOME = 1002;
 	private static final int REQUEST_SUBMIT_YOK = 1003;
 	private static final int REQUEST_SHOWSTATISTICS = 1004;
+	/**
+	 * 인증용 쿠키. HTTPClient에 언제나 보내야 함.
+	 */
+	public static String _token;
 	SharedPreferences _sharedPrefs;
 	private String _RegistationChannelId;
 	TextView _textViewMission;
+	public static Mission Mission;
 
 	public void onCreate(Bundle savedInstanceState) {
 
@@ -50,7 +59,6 @@ public class MainActivity extends YokSherlockActivity {
 		setContentView(R.layout.activity_main);
 
 		_textViewMission = (TextView) findViewById(R.id.textViewMission);
-
 
 		if (_member.principal != null && _member.principal.length() > 0) {
 			// TODO: 첫 화면 로딩
@@ -78,6 +86,60 @@ public class MainActivity extends YokSherlockActivity {
 		}
 	}
 
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getSupportMenuInflater().inflate(R.menu.menu, menu);
+		return true;
+	}
+
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// 액션바 메뉴 선택
+		// 로그아웃.
+		if (item.getTitle() == getString(R.string.menuLogout)) {
+
+			if (_token == null){
+				RequestLogin(MainActivity.this);
+				return true;
+			}
+
+			HttpClient.delete(YokUrl.LOGOUT.toString() + _token, new AsyncHttpResponseHandler() {
+
+				@Override
+				public void onFailure(Throwable throwable, String s) {
+					super.onFailure(throwable, s);
+				}
+
+				@Override
+				public void onFinish() {
+					super.onFinish();
+				}
+
+				@Override
+				public void onSuccess(String s) {
+					super.onSuccess(s);
+
+					SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+					SharedPreferences.Editor editor = sharedPrefs.edit();
+					if (editor != null && sharedPrefs.contains("autoLogin") && sharedPrefs.getBoolean("autoLogin", true)) {
+						editor.remove("autoLogin");
+						editor.commit();
+					}
+
+					RequestLogin(MainActivity.this);
+				}
+			});
+		}
+
+		return true;
+	}
+
+
+	/**
+	 * 셋팅 정보들 출력
+	 */
 	private void load() {
 		RelativeLayout avatarLayout1 = (RelativeLayout) findViewById(R.id.avatar1);
 		RelativeLayout avatarLayout2 = (RelativeLayout) findViewById(R.id.avatar2);
@@ -88,6 +150,7 @@ public class MainActivity extends YokSherlockActivity {
 		setAvatar(avatarLayout2, get_random_avatar());
 		setAvatar(avatarLayout3, get_random_avatar());
 		setAvatar(avatarLayout4, get_random_avatar());
+
 	}
 
 	private Avatar get_random_avatar(){
@@ -214,6 +277,10 @@ public class MainActivity extends YokSherlockActivity {
 			case REQUEST_WELCOME:
 				// do nothing.
 				break;
+			case REQUEST_SUBMIT_YOK:
+				if (resultCode == RESULT_OK)
+					MainActivity.ShowToast(MainActivity.this, " 늉을 접수했습니다.", true);
+				break;
 		}
 		super.onActivityResult(requestCode, resultCode, data);
 	}
@@ -225,6 +292,12 @@ public class MainActivity extends YokSherlockActivity {
 				break;
 			case R.id.imageButtonShowStatistics:
 				startActivityForResult(new Intent(MainActivity.this, StatisticsActivity.class), REQUEST_SHOWSTATISTICS);
+				break;
+			case R.id.avatar1:
+				ShowToast(MainActivity.this, "아야", true);
+				break;
+			case R.id.avatar2:
+				ShowToast(MainActivity.this, "오잉", true);
 				break;
 		}
 	}

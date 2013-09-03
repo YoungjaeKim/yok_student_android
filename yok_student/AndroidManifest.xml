@@ -89,7 +89,7 @@
 				android:name=".page.MainActivity"
 				android:theme="@android:style/Theme.NoTitleBar"
 				android:configChanges="keyboardHidden|orientation|screenSize"
-				android:label="Main">
+				android:label="늉!">
 			<intent-filter>
 				<category android:name="android.intent.category.DEFAULT"/>
 

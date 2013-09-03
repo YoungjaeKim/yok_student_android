@@ -5,16 +5,29 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/blue_background_yok">
+<ScrollView
+		android:orientation="vertical"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		>
+
+	<LinearLayout
+			android:orientation="vertical"
+			android:layout_width="fill_parent"
+			android:layout_height="match_parent">
 
 	<LinearLayout
 			android:orientation="vertical"
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
-			android:layout_margin="10dp">
+			android:layout_marginLeft="30dp"
+			android:layout_marginTop="20dp"
+			android:layout_marginRight="30dp">
 
 		<LinearLayout
 				android:layout_width="fill_parent"
 				android:layout_height="wrap_content"
+				android:background="@android:color/white"
 				>
 
 			<EditText
@@ -22,91 +35,95 @@
 					android:layout_height="wrap_content"
 					android:id="@+id/editTextName"
 					android:layout_weight="1"
-					android:hint="이름"/>
+					android:hint="이름"
+					android:textSize="14sp"
+					/>
 		</LinearLayout>
 
 		<RelativeLayout
 				android:layout_width="fill_parent"
 				android:layout_height="wrap_content"
-				>
+				android:layout_marginTop="10dp">
 
 			<LinearLayout
 					android:layout_width="fill_parent"
 					android:layout_height="wrap_content"
-					>
-
-				<TextView
-						android:layout_width="wrap_content"
-						android:layout_height="wrap_content"
-						android:text="비밀번호"
-						android:id="@+id/textView"/>
+					android:background="@android:color/white">
 
 				<EditText
 						android:layout_width="wrap_content"
 						android:layout_height="wrap_content"
 						android:inputType="textPassword"
 						android:ems="10"
-						android:id="@+id/editText2"
+						android:id="@+id/editTextPassword"
 						android:layout_weight="1"
-						android:hint="6자 이상"/>
+						android:hint="6자 이상"
+						android:textSize="14sp"/>
 
 				<EditText
 						android:layout_width="wrap_content"
 						android:layout_height="wrap_content"
 						android:inputType="textPassword"
 						android:ems="10"
-						android:id="@+id/editText3"
+						android:id="@+id/editTextPassword2"
 						android:layout_weight="1"
 						android:hint="다시 입력"
-						android:layout_marginLeft="10dp"/>
+						android:layout_marginLeft="10dp"
+						android:textSize="14sp"/>
 
 			</LinearLayout>
 		</RelativeLayout>
 
 		<LinearLayout
 				android:layout_width="fill_parent"
-				android:layout_height="fill_parent">
-
-			<TextView
-					android:layout_width="80dp"
-					android:layout_height="wrap_content"
-					android:text="핸드폰번호"
-					android:id="@+id/textView"/>
+				android:layout_height="fill_parent"
+				android:layout_marginTop="10dp"
+				android:background="@android:color/white">
 
 			<EditText
 					android:layout_width="0dp"
 					android:layout_height="wrap_content"
 					android:id="@+id/editTextPhone"
-					android:layout_weight="1"/>
+					android:layout_weight="1"
+					android:textSize="14sp"
+					android:hint="핸드폰번호"/>
 		</LinearLayout>
 
 		<LinearLayout
 				android:layout_width="fill_parent"
-				android:layout_height="fill_parent">
-
-			<TextView
-					android:layout_width="80dp"
-					android:layout_height="wrap_content"
-					android:text="그룹"
-					android:id="@+id/textView"/>
+				android:layout_height="fill_parent"
+				android:background="@android:color/white"
+				android:layout_marginTop="10dp"
+				android:orientation="vertical">
 
 			<AutoCompleteTextView
-					android:layout_width="wrap_content"
+					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
 					android:id="@+id/autoCompleteTextViewGroup"
 					android:hint="검색..."
-					android:layout_weight="1"/>
+					android:layout_weight="1"
+					android:completionThreshold="1"
+					android:singleLine="true"
+					android:textSize="14sp"/>
 
 		</LinearLayout>
 	</LinearLayout>
 
-	<LinearLayout
+		<ImageView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:id="@+id/imageView"
+				android:src="@drawable/make_your_avatar_flag"
+				android:scaleType="fitCenter"
+				android:layout_marginTop="20dp"
+				android:layout_gravity="center_horizontal"/>
+
+		<LinearLayout
 			android:orientation="horizontal"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:layout_alignParentBottom="true"
-			android:layout_centerHorizontal="true"
-			android:layout_marginBottom="10dp">
+			android:layout_marginBottom="20dp"
+			android:layout_gravity="center_horizontal">
 
 		<LinearLayout
 				android:layout_width="wrap_content"
@@ -190,4 +207,7 @@
 		</LinearLayout>
 
 	</LinearLayout>
+	</LinearLayout>
+</ScrollView>
+
 </RelativeLayout>

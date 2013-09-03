@@ -7,5 +7,11 @@
 	<string name="errorLogin">아이디 또는 비밀번호가 잘못되었습니다</string>
 	<string name="menuLogout">로그아웃</string>
 	<string name="buttonRegisterSend">가입하기</string>
+	<string name="validationUserId">아이디를 입력해주세요</string>
+	<string name="validationUserIdExist">아이디가 이미 존재합니다.</string>
+	<string name="validationUserIdLength6">아이디를 6글자 이상 입력해주세요</string>
+	<string name="validationUserPasswd">비밀번호를 입력해주세요</string>
+	<string name="validationUserPasswdLength6">비밀번호를 6글자 이상 입력해주세요</string>
+	<string name="validationPasswordAreNotEqual">비밀번호가 서로 다릅니다</string>
 
 </resources>

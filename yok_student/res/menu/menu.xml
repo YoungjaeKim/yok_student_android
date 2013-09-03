@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+	<item android:id="@+id/menuSetup" android:title="설정" >
+	</item>
+	<item android:id="@+id/menuLogout" android:title="@string/menuLogout">
+	</item>
+	<item android:id="@+id/menuInfo" android:title="이 앱에 대하여">
+	</item>
+	<!--<item android:id="@+id/menuTest" android:title="@string/menuTest" android:icon="@drawable/ic_action_about">-->
+	<!--</item>-->
+</menu>

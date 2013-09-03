@@ -12,7 +12,8 @@ import com.actionbarsherlock.app.SherlockActivity;
 public class StatisticsActivity extends SherlockActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		setTheme(R.style.Theme_Yok); //Used for theme switching in samples
-
 		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_writing);
+
 	}
 }

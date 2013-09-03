@@ -3,7 +3,15 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="match_parent">
+              android:layout_height="match_parent"
+              android:background="@color/blue_background_yok">
+
+	<ImageView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:id="@+id/imageView"
+			android:src="@drawable/bg_main03"
+			android:scaleType="centerInside"/>
 
 	<TextView
 			android:layout_width="wrap_content"
@@ -11,26 +19,26 @@
 			android:text="미션: 블라블라"
 			android:id="@+id/textViewMission"
 			android:layout_alignParentTop="true"
-			android:layout_centerHorizontal="true"/>
+			android:layout_centerHorizontal="true"
+			android:visibility="invisible"/>
 
 	<ImageButton
-			android:layout_width="80dp"
+			android:layout_width="100dp"
 			android:layout_height="80dp"
 			android:id="@+id/imageButtonSubmitYok"
 			android:layout_alignParentBottom="true"
 			android:layout_alignParentRight="true"
-			android:src="@drawable/ic_launcher"
 			android:scaleType="fitCenter"
-			android:background="@android:color/transparent"
-			android:onClick="click"/>
+			android:onClick="click"
+			android:background="@android:color/transparent"/>
 
 	<ImageButton
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
+			android:layout_width="100dp"
+			android:layout_height="80dp"
 			android:id="@+id/imageButtonShowStatistics"
 			android:layout_alignParentBottom="true"
 			android:layout_alignParentLeft="true"
-			android:src="@drawable/button_arrow_left"
+			android:onClick="click"
 			android:background="@android:color/transparent"/>
 
 	<LinearLayout
@@ -39,7 +47,7 @@
 			android:dividerPadding="10dp"
 			android:layout_alignParentTop="true"
 			android:layout_toLeftOf="@+id/imageButtonSubmitYok"
-			android:layout_marginTop="20dp">
+			android:layout_marginTop="20dp" android:visibility="invisible">
 
 		<include
 				android:layout_width="50dp"
